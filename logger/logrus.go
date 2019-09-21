@@ -1,6 +1,9 @@
 package logger
 
 import (
+	"context"
+	"io"
+
 	"github.com/sirupsen/logrus"
 )
 
@@ -44,4 +47,24 @@ func Panic(args ...interface{}) {
 // WithFields -
 func WithFields(f Fields) *logrus.Entry {
 	return l.WithFields(f)
+}
+
+// WithField -
+func WithField(key string, value interface{}) *logrus.Entry {
+	return l.WithField(key, value)
+}
+
+// WithError -
+func WithError(err error) *logrus.Entry {
+	return l.WithError(err)
+}
+
+// WithContext -
+func WithContext(ctx context.Context) *logrus.Entry {
+	return l.WithContext(ctx)
+}
+
+// Writer -
+func Writer() *io.PipeWriter {
+	return l.Writer()
 }

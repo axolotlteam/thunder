@@ -9,18 +9,6 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// Fields -
-type Fields = logrus.Fields
-
-// log level
-const (
-	TraceLevel = logrus.TraceLevel
-	DebugLevel = logrus.DebugLevel
-	InfoLevel  = logrus.InfoLevel
-	ErrorLevel = logrus.ErrorLevel
-	WarnLevel  = logrus.WarnLevel
-)
-
 //NewLogrus -
 func NewLogrus() {
 	l = logrus.New()
@@ -32,6 +20,20 @@ func NewLogrus() {
 			//return fmt.Sprintf("%s()", f.Function), fmt.Sprintf("%s:%d", filename, f.Line)
 			return f.Function + "()", filename + ":" + strconv.Itoa(f.Line)
 		},
+	})
+}
+
+// SetServiceInfo -
+func SetServiceInfo(service string) {
+	l.AddHook(&fieldHook{
+		Service: service,
+		Host: func() string {
+			name, err := os.Hostname()
+			if err != nil {
+				return ""
+			}
+			return name
+		}(),
 	})
 }
 
@@ -51,6 +53,7 @@ func SetLevel(level logrus.Level) {
 	}
 }
 
-// AddSlackHook -
-func AddSlackHook(webhook string) {
+// SetSlackHook -
+func SetSlackHook(webhook string, level logrus.Level) {
+
 }
