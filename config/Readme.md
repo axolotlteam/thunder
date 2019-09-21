@@ -17,6 +17,13 @@ func main() {
     }
 
     v.GetString("xxx.xxx")
+
+
+    x := config.Database{}
+
+    // maping to struct
+    err := viper.Unmarshal(&x)
+
 }
 
 ```
