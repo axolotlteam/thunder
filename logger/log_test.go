@@ -7,7 +7,7 @@ import (
 
 func Test_Logrus(t *testing.T) {
 	NewLogrus()
-	l.WithFields(Fields{
+	WithFields(Fields{
 		"msg": time.Now().Unix(),
 	}).Info("12")
 }

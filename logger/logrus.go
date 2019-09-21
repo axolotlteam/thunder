@@ -1,58 +1,47 @@
 package logger
 
 import (
-	"os"
-	"path"
-	"runtime"
-	"strconv"
-
 	"github.com/sirupsen/logrus"
 )
 
 var l *logrus.Logger
 
-// Fields -
-type Fields = logrus.Fields
-
-// log level
-const (
-	TraceLevel = logrus.TraceLevel
-	DebugLevel = logrus.DebugLevel
-	InfoLevel  = logrus.InfoLevel
-	ErrorLevel = logrus.ErrorLevel
-	WarnLevel  = logrus.WarnLevel
-)
-
-//NewLogrus -
-func NewLogrus() {
-	l = logrus.New()
-	l.SetOutput(os.Stdout)
-	l.SetReportCaller(true)
-	l.SetFormatter(&logrus.JSONFormatter{
-		CallerPrettyfier: func(f *runtime.Frame) (string, string) {
-			filename := path.Base(f.File)
-			//return fmt.Sprintf("%s()", f.Function), fmt.Sprintf("%s:%d", filename, f.Line)
-			return f.Function + "()", filename + ":" + strconv.Itoa(f.Line)
-		},
-	})
+// Fatal -
+func Fatal(args ...interface{}) {
+	l.Fatal(args...)
 }
 
-// SetLevel -
-func SetLevel(level logrus.Level) {
-	switch level {
-	case TraceLevel:
-		l.SetLevel(logrus.TraceLevel)
-	case DebugLevel:
-		l.SetLevel(logrus.DebugLevel)
-	case InfoLevel:
-		l.SetLevel(logrus.InfoLevel)
-	case ErrorLevel:
-		l.SetLevel(logrus.ErrorLevel)
-	case WarnLevel:
-		l.SetLevel(logrus.WarnLevel)
-	}
+// Warn -
+func Warn(args ...interface{}) {
+	l.Warn(args...)
 }
 
-// AddSlackHook -
-func AddSlackHook(webhook string) {
+// Info -
+func Info(args ...interface{}) {
+	l.Info(args...)
+}
+
+// Error -
+func Error(args ...interface{}) {
+	l.Error(args...)
+}
+
+// Debug -
+func Debug(args ...interface{}) {
+	l.Debug(args...)
+}
+
+// Trace -
+func Trace(args ...interface{}) {
+	l.Trace(args...)
+}
+
+// Panic -
+func Panic(args ...interface{}) {
+	l.Panic(args...)
+}
+
+// WithFields -
+func WithFields(f Fields) *logrus.Entry {
+	return l.WithFields(f)
 }
