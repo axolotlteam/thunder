@@ -1,7 +1,16 @@
 package status
 
-// GrpcStatus -
-type GrpcStatus interface {
+var list map[int]Error
+
+func init() {
+
+}
+
+// Error -
+type Error interface {
+	Error() string
+	String() string
+	GetCode() int
 }
 
 type status struct {
