@@ -15,7 +15,7 @@ import (
 func init () {
 
     logger.NewLogrus()
-    logger.SetLevel(logger.Debug)
+    logger.SetLevel(logger.DebugLevel)
     logger.SetServiceInfo("thunder")
 
 }
