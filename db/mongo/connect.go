@@ -1,6 +1,8 @@
 package mongo
 
 import (
+	"crypto/tls"
+	"net"
 	"strings"
 	"time"
 
@@ -29,24 +31,32 @@ func Close() {
 }
 
 // Con - connect the  Mongo database
-func Con(host, user, password, dbname, appname string) error {
-	if err := con(host, user, password, dbname, appname); err != nil {
+func Con(c Config) error {
+	if err := con(c); err != nil {
 		return err
 	}
 	return nil
 }
 
-func con(host, user, password, dbname, appname string) error {
+func con(c Config) error {
 	mconfig := &mgo.DialInfo{
-		Addrs:         strings.Split(host, ","),
-		Username:      user,
-		Password:      password,
-		Database:      dbname,
+		Addrs:         strings.Split(c.Host, ","),
+		Username:      c.User,
+		Password:      c.Password,
+		Database:      c.Database,
 		Timeout:       5 * time.Second,
 		PoolLimit:     30,
 		PoolTimeout:   120 * time.Second,
-		AppName:       appname,
+		AppName:       c.AppName,
 		MaxIdleTimeMS: 10000,
+	}
+
+	if c.SSL {
+		mconfig.DialServer = func(addr *mgo.ServerAddr) (net.Conn, error) {
+			return tls.Dial("tcp", addr.String(), &tls.Config{
+				InsecureSkipVerify: true,
+			})
+		}
 	}
 
 	s, err := mgo.DialWithInfo(mconfig)
@@ -54,11 +64,5 @@ func con(host, user, password, dbname, appname string) error {
 		return err
 	}
 	m = s
-
 	return nil
-}
-
-// DevCon - use to connect the localhost database
-func DevCon() error {
-	return con("localhost:27017", "", "", "")
 }
