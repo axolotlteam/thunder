@@ -29,14 +29,14 @@ func Close() {
 }
 
 // Con - connect the  Mongo database
-func Con(host, user, password, dbname string) error {
-	if err := con(host, user, password, dbname); err != nil {
+func Con(host, user, password, dbname, appname string) error {
+	if err := con(host, user, password, dbname, appname); err != nil {
 		return err
 	}
 	return nil
 }
 
-func con(host, user, password, dbname string) error {
+func con(host, user, password, dbname, appname string) error {
 	mconfig := &mgo.DialInfo{
 		Addrs:         strings.Split(host, ","),
 		Username:      user,
@@ -45,7 +45,7 @@ func con(host, user, password, dbname string) error {
 		Timeout:       5 * time.Second,
 		PoolLimit:     30,
 		PoolTimeout:   120 * time.Second,
-		AppName:       "clayart-api",
+		AppName:       appname,
 		MaxIdleTimeMS: 10000,
 	}
 
