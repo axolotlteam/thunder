@@ -9,6 +9,10 @@ import (
 
 var l *logrus.Logger
 
+func init() {
+	NewLogrus()
+}
+
 // Fatal -
 func Fatal(args ...interface{}) {
 	l.Fatal(args...)
