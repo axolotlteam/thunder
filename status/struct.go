@@ -11,4 +11,5 @@ var (
 	ErrorDatabaseUpdateFailed  = NewGRPCStatus(Aborted, 105, "database update failed")
 	ErrorDataNotFound          = NewGRPCStatus(NotFound, 106, "data not found")
 	ErrorDataIsExists          = NewGRPCStatus(AlreadyExists, 200, "data is exists")
+	ErrorInvalidParameter      = NewGRPCStatus(InvalidArgument, 300, "Invalid Argument")
 )
