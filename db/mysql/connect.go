@@ -11,11 +11,13 @@ import (
 var m *sql.DB
 
 // M -
-func M() *sql.DB {
-	if err := m.Ping(); err != nil {
+func M() (*sql.DB, error) {
+	err := m.Ping()
+	if err != nil {
 		logger.WithError(err).Error("mysql connect failed")
+		return nil, err
 	}
-	return m
+	return m, nil
 }
 
 // Con -
