@@ -13,6 +13,11 @@ func init() {
 	NewLogrus()
 }
 
+// Logrus -
+func Logrus() *logrus.Logger {
+	return l
+}
+
 // Fatal -
 func Fatal(args ...interface{}) {
 	l.Fatal(args...)
