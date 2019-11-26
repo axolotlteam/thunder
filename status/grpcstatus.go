@@ -1,8 +1,6 @@
 package status
 
 import (
-	"encoding/json"
-
 	"github.com/axolotlteam/thunder/logger"
 	"google.golang.org/grpc/codes"
 	gs "google.golang.org/grpc/status"
@@ -83,6 +81,7 @@ func fromGRPCStatus(err error) Status {
 }
 
 func (s *grpcstatus) parseMsg() {
+	var json = jsoniter.ConfigCompatibleWithStandardLibrary
 	// msg = >
 	s.s = &status{}
 	err := json.Unmarshal([]byte(s.gst.Message()), s.s)
