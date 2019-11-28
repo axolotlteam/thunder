@@ -63,6 +63,7 @@ func init() {
 
 func Test_CreateJWTWithClaims(t *testing.T) {
 	j := NewJWT().Create(u1)
+	t1 = j.Get()
 	assert.NoError(t, j.Error())
 	spew.Dump(j)
 }
@@ -70,6 +71,7 @@ func Test_CreateJWTWithClaims(t *testing.T) {
 func Test_CreateJWTWithMap(t *testing.T) {
 	u2["ist"] = time.Now().Unix()
 	j := NewJWT().Create(u2)
+	t2 = j.Get()
 	assert.NoError(t, j.Error())
 	spew.Dump(j)
 }
@@ -77,22 +79,14 @@ func Test_CreateJWTWithMap(t *testing.T) {
 func Test_ParseJWTWithClaims(t *testing.T) {
 	r1 = new(User)
 	j := NewJWT().Parse(t1, r1)
-
-	if j.Error() != nil {
-		t.Errorf("Test_ParseJWTWithClaims Error: %v", j.Error())
-	} else {
-		t.Logf("Test_ParseJWTWithClaims Sussess: %v", r1)
-	}
+	assert.NoError(t, j.Error())
 }
 
 func Test_ParseJWTWithMap(t *testing.T) {
 	r2 = make(UserMap)
+
 	j := NewJWT().Parse(t2, r2)
-	if j.Error() != nil {
-		t.Errorf("Test_ParseJWTWithMap Error: %v", j.Error())
-	} else {
-		t.Logf("Test_ParseJWTWithMap Sussess: %v", r2)
-	}
+	assert.NoError(t, j.Error())
 }
 
 func Benchmark_CreateJWTWithClaims(b *testing.B) {

@@ -20,7 +20,7 @@ func NewJwtMap(sub string, exp int64, nbf int64) jwt.MapClaims {
 	j := jwt.MapClaims{
 		"iss": issuer,
 		"sub": sub,
-		"iat": time.Now(),
+		"iat": time.Now().Unix(),
 	}
 
 	if exp != 0 {
