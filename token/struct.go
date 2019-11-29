@@ -1,6 +1,7 @@
 package token
 
 import (
+	"fmt"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
@@ -20,14 +21,14 @@ func NewJwtMap(sub string, exp int64, nbf int64) jwt.MapClaims {
 	j := jwt.MapClaims{
 		"iss": issuer,
 		"sub": sub,
-		"iat": time.Now().Unix(),
+		"iat": fmt.Sprintf("%v", time.Now().Unix()),
 	}
 
 	if exp != 0 {
-		j["exp"] = exp
+		j["exp"] = fmt.Sprintf("%v", exp)
 	}
 	if nbf != 0 {
-		j["nbf"] = nbf
+		j["nbf"] = fmt.Sprintf("%v", nbf)
 	}
 
 	return j
