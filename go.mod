@@ -21,4 +21,5 @@ require (
 	golang.org/x/sys v0.0.0-20190920190810-ef0ce1748380 // indirect
 	google.golang.org/grpc v1.21.0
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
+	gopkg.in/mgo.v2 v2.0.0-20190816093944-a6b53ec6cb22
 )

@@ -43,11 +43,19 @@ func con(c Config) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	options := options.Client()
-	options.ApplyURI(uri(c)).SetAppName(c.AppName).SetMaxPoolSize(c.PoolSize)
+	opts := options.Client()
+	opts.ApplyURI(uri(c)).SetAppName(c.AppName).SetMaxPoolSize(c.PoolSize)
+
+	if c.User != "" && c.Password != "" {
+		opts.SetAuth(options.Credential{
+			Username:   c.User,
+			Password:   c.Password,
+			AuthSource: c.Database,
+		})
+	}
 
 	// Connect to MongoDB
-	client, err := mongo.NewClient(options)
+	client, err := mongo.NewClient(opts)
 	if err != nil {
 		return err
 	}

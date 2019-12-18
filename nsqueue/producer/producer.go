@@ -9,6 +9,7 @@ import (
 // ConnTCP -
 func ConnTCP(c Configs) error {
 	p, err := nsq.NewProducer(c.URL, nsq.NewConfig())
+
 	p.SetLogger(Logger, c.LogLevel)
 
 	if err != nil {
