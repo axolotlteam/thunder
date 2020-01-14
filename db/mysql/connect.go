@@ -30,7 +30,7 @@ func Con(c Config) error {
 
 func con(c Config) error {
 	connStr := fmt.Sprintf(
-		"%s:%s@tcp(%s)/%s?charset=utf8&parseTime=true&loc=UTC&timeout=30s",
+		"%s:%s@tcp(%s)/%s?charset=utf8&parseTime=true&loc=Local&timeout=30s",
 		c.User,
 		c.Password,
 		c.Host,

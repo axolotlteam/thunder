@@ -14,9 +14,9 @@ func Test_Con(t *testing.T) {
 
 	config := Config{
 		Host:     "localhost:27017",
-		User:     "",
-		Password: "",
-		Database: "testDatabase",
+		User:     "root",
+		Password: "9527",
+		Database: "admin",
 		AppName:  "test",
 	}
 
