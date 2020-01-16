@@ -8,7 +8,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/hashicorp/consul/api"
 )
 
@@ -40,7 +39,7 @@ func registerServer(opts *Options) {
 	if err != nil {
 		log.Panic(err.Error())
 	}
-	spew.Dump(opts.TTL)
+
 	if err := opts.Registry.Agent().ServiceRegister(&api.AgentServiceRegistration{
 		ID:      opts.id,
 		Name:    opts.Name,
