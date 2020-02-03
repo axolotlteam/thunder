@@ -1,6 +1,8 @@
 package srv
 
-import "google.golang.org/grpc"
+import (
+	"google.golang.org/grpc"
+)
 
 // Service -
 type Service interface {
@@ -8,6 +10,8 @@ type Service interface {
 	ID() string
 	// The service name
 	Name() string
+	// Version
+	Version() string
 	// Run the service
 	Run() error
 	// Options returns the current options
@@ -16,7 +20,10 @@ type Service interface {
 	Server() *grpc.Server
 }
 
+// Option -
+type Option func(*Options)
+
 // NewService - creates and returns a new Service
-func NewService(opts Options) Service {
-	return newService(opts)
+func NewService(opts ...Option) Service {
+	return newService(opts...)
 }

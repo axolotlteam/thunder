@@ -5,16 +5,25 @@ import (
 	"encoding/hex"
 	"fmt"
 	"log"
-	"strconv"
 	"time"
 
 	"github.com/hashicorp/consul/api"
 )
 
-const (
-	// TTL - default
-	TTL = 30 * time.Second
+var (
+	// DefaultRegistry -
+	DefaultRegistry = newRegistry()
+	// DefaultRegistryTTL - default
+	DefaultRegistryTTL = 30 * time.Second
 )
+
+func newRegistry() *api.Client {
+	client, err := api.NewClient(api.DefaultConfig())
+	if err != nil {
+		panic(err)
+	}
+	return client
+}
 
 func newClient(c *api.Client) *api.Client {
 	if c != nil {
@@ -33,21 +42,16 @@ func registerServer(opts *Options) {
 	var h [16]byte
 	rand.Read(h[:])
 
-	opts.id = fmt.Sprintf("%s-%s", opts.Name, hex.EncodeToString(h[:]))
-
-	port, err := strconv.Atoi(opts.Port)
-	if err != nil {
-		log.Panic(err.Error())
-	}
+	opts.id = fmt.Sprintf("%s-%s", opts.name, hex.EncodeToString(h[:]))
 
 	if err := opts.Registry.Agent().ServiceRegister(&api.AgentServiceRegistration{
 		ID:      opts.id,
-		Name:    opts.Name,
+		Name:    opts.name,
 		Address: opts.Host,
-		Port:    port,
-		Tags:    []string{opts.Name, opts.id},
+		Port:    opts.Port,
+		Tags:    []string{opts.name, opts.id},
 		Check: &api.AgentServiceCheck{
-			TTL:     (opts.TTL + time.Second).String(),
+			TTL:     (opts.RegistryTTL + time.Second).String(),
 			Timeout: time.Minute.String(),
 		},
 	}); err != nil {
@@ -63,7 +67,7 @@ func healthCheck(opts Options) {
 		if err := opts.Registry.Agent().PassTTL(checkid, ""); err != nil {
 			log.Fatalln(err)
 		}
-		time.Sleep(opts.TTL)
+		time.Sleep(opts.RegistryTTL)
 	}
 }
 

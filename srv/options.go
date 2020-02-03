@@ -3,7 +3,6 @@ package srv
 import (
 	"log"
 	"net"
-	"strings"
 	"time"
 
 	"github.com/hashicorp/consul/api"
@@ -13,72 +12,87 @@ import (
 // Options -
 type Options struct {
 	id       string
-	Name     string
+	name     string
+	version  string
 	Server   *grpc.Server
 	Host     string
-	Port     string
+	Port     int
 	Listener net.Listener
-	// Registry
+	// Registry Client
 	Registry *api.Client
-	// TTL time
-	TTL time.Duration
+	// Registry TTL
+	RegistryTTL time.Duration
 }
 
-func newOptions(opts Options) Options {
-	o := Options{}
-	if opts.Name == "" {
+func newOptions(opts ...Option) Options {
+	opt := Options{
+		Server:      DefaultServer,
+		Registry:    DefaultRegistry,
+		Host:        DefaultHost,
+		Port:        DefaultPort,
+		RegistryTTL: DefaultRegistryTTL,
+	}
+
+	for _, o := range opts {
+		o(&opt)
+	}
+
+	opt.Listener = newListener(&opt)
+
+	// register server
+	registerServer(&opt)
+
+	return opt
+}
+
+// Name of the service
+func Name(n string) Option {
+	if n == "" {
 		log.Panic("Service name is required")
 	}
-	o.Name = opts.Name
-
-	if opts.Server == nil {
-		o.Server = grpc.NewServer()
-	} else {
-		o.Server = opts.Server
+	return func(o *Options) {
+		o.name = n
 	}
-
-	if opts.Host == "" {
-		o.Host = localIP()
-	} else {
-		o.Host = opts.Host
-	}
-
-	if opts.Port == "" {
-		o.Port = "0"
-	} else {
-		o.Port = opts.Port
-	}
-
-	var err error
-	o.Listener, err = net.Listen("tcp", o.Host+":"+o.Port)
-	if err != nil {
-		log.Panic(err.Error())
-	}
-
-	if opts.TTL == 0 {
-		o.TTL = TTL
-	} else {
-		o.TTL = opts.TTL
-	}
-
-	o.Port = strings.Split(o.Listener.Addr().String(), ":")[1]
-
-	o.Registry = newClient(opts.Registry)
-
-	return o
 }
 
-func localIP() string {
-	addrs, err := net.InterfaceAddrs()
-	if err != nil {
-		return ""
+// Version of the service
+func Version(v string) Option {
+	return func(o *Options) {
+		o.version = v
 	}
-	for _, address := range addrs {
-		if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
-			if ipnet.IP.To4() != nil {
-				return ipnet.IP.String()
-			}
-		}
+}
+
+// Registry -
+func Registry(r *api.Client) Option {
+	return func(o *Options) {
+		o.Registry = r
 	}
-	return ""
+}
+
+// RegistryTTL -
+func RegistryTTL(t time.Duration) Option {
+	return func(o *Options) {
+		o.RegistryTTL = t
+	}
+}
+
+// Server -
+func Server(s *grpc.Server) Option {
+	return func(o *Options) {
+		o.Server = s
+	}
+}
+
+// Host -
+func Host(host string) Option {
+	return func(o *Options) {
+		o.Host = host
+	}
+}
+
+// Port -
+func Port(port int) Option {
+	return func(o *Options) {
+		o.Port = port
+	}
 }

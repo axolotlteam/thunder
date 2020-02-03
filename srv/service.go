@@ -13,11 +13,8 @@ type service struct {
 }
 
 // newService -
-func newService(opts Options) Service {
-	options := newOptions(opts)
-
-	// register server
-	registerServer(&options)
+func newService(opts ...Option) Service {
+	options := newOptions(opts...)
 
 	return &service{
 		opts: options,
@@ -28,8 +25,12 @@ func (s *service) ID() string {
 	return s.opts.id
 }
 
+func (s *service) Version() string {
+	return s.opts.version
+}
+
 func (s *service) Name() string {
-	return s.opts.Name
+	return s.opts.name
 }
 
 func (s *service) Options() Options {
