@@ -15,6 +15,8 @@ var (
 	DefaultHost = newHost()
 	// DefaultPort -
 	DefaultPort = 0
+	// DefaultHook -
+	DefaultHook = func() {}
 )
 
 func newRPCServer() *grpc.Server {

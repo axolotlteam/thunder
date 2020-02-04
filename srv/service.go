@@ -21,6 +21,13 @@ func newService(opts ...Option) Service {
 	}
 }
 
+func (s *service) Init(opts ...Option) {
+	for _, o := range opts {
+		o(&s.opts)
+	}
+	s.opts.BeforeStart()
+}
+
 func (s *service) ID() string {
 	return s.opts.id
 }
@@ -46,7 +53,7 @@ func (s *service) Run() error {
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM, syscall.SIGINT, syscall.SIGKILL)
 	go func(o *Options) {
 		<-c
-		deRegister(o.Registry, o.id)
+		deRegister(o.Registry, o.id, o.BeforeStop, o.AfterStop)
 		os.Exit(1)
 	}(&s.opts)
 
@@ -54,8 +61,17 @@ func (s *service) Run() error {
 }
 
 func (s *service) Start() error {
-	if err := s.opts.Server.Serve(s.opts.Listener); err != nil {
-		return err
-	}
-	return nil
+	// register server
+	registerServer(&s.opts)
+
+	c := make(chan error, 1)
+	go func(o *Options) {
+		if err := s.opts.Server.Serve(s.opts.Listener); err != nil {
+			c <- err
+		}
+	}(&s.opts)
+
+	s.opts.AfterStart()
+
+	return <-c
 }

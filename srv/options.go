@@ -22,6 +22,12 @@ type Options struct {
 	Registry *api.Client
 	// Registry TTL
 	RegistryTTL time.Duration
+
+	// Before and After funcs
+	BeforeStart func()
+	BeforeStop  func()
+	AfterStart  func()
+	AfterStop   func()
 }
 
 func newOptions(opts ...Option) Options {
@@ -31,6 +37,10 @@ func newOptions(opts ...Option) Options {
 		Host:        DefaultHost,
 		Port:        DefaultPort,
 		RegistryTTL: DefaultRegistryTTL,
+		BeforeStart: DefaultHook,
+		BeforeStop:  DefaultHook,
+		AfterStart:  DefaultHook,
+		AfterStop:   DefaultHook,
 	}
 
 	for _, o := range opts {
@@ -39,14 +49,11 @@ func newOptions(opts ...Option) Options {
 
 	opt.Listener = newListener(&opt)
 
-	// register server
-	registerServer(&opt)
-
 	return opt
 }
 
-// Name of the service
-func Name(n string) Option {
+// SetName of the service
+func SetName(n string) Option {
 	if n == "" {
 		log.Panic("Service name is required")
 	}
@@ -55,44 +62,74 @@ func Name(n string) Option {
 	}
 }
 
-// Version of the service
-func Version(v string) Option {
+// SetVersion of the service
+func SetVersion(v string) Option {
 	return func(o *Options) {
 		o.version = v
 	}
 }
 
-// Registry -
-func Registry(r *api.Client) Option {
+// SetRegistry -
+func SetRegistry(r *api.Client) Option {
 	return func(o *Options) {
 		o.Registry = r
 	}
 }
 
-// RegistryTTL -
-func RegistryTTL(t time.Duration) Option {
+// SetRegistryTTL -
+func SetRegistryTTL(t time.Duration) Option {
 	return func(o *Options) {
 		o.RegistryTTL = t
 	}
 }
 
-// Server -
-func Server(s *grpc.Server) Option {
+// SetServer -
+func SetServer(s *grpc.Server) Option {
 	return func(o *Options) {
 		o.Server = s
 	}
 }
 
-// Host -
-func Host(host string) Option {
+// SetHost -
+func SetHost(host string) Option {
 	return func(o *Options) {
 		o.Host = host
 	}
 }
 
-// Port -
-func Port(port int) Option {
+// SetPort -
+func SetPort(port int) Option {
 	return func(o *Options) {
 		o.Port = port
+	}
+}
+
+// Before and Afters
+
+// BeforeStart -
+func BeforeStart(fn func()) Option {
+	return func(o *Options) {
+		o.BeforeStart = fn
+	}
+}
+
+// BeforeStop -
+func BeforeStop(fn func()) Option {
+	return func(o *Options) {
+		o.BeforeStop = fn
+	}
+}
+
+// AfterStart -
+func AfterStart(fn func()) Option {
+	return func(o *Options) {
+		o.AfterStart = fn
+	}
+}
+
+// AfterStop -
+func AfterStop(fn func()) Option {
+	return func(o *Options) {
+		o.AfterStop = fn
 	}
 }

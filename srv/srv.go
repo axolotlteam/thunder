@@ -10,6 +10,8 @@ type Service interface {
 	ID() string
 	// The service name
 	Name() string
+	// Initialize
+	Init(...Option)
 	// Version
 	Version() string
 	// Run the service
