@@ -16,7 +16,7 @@ type Options struct {
 	version  string
 	Server   *grpc.Server
 	Host     string
-	Port     int
+	Port     string
 	Listener net.Listener
 	// Registry Client
 	Registry *api.Client
@@ -98,7 +98,7 @@ func SetHost(host string) Option {
 }
 
 // SetPort -
-func SetPort(port int) Option {
+func SetPort(port string) Option {
 	return func(o *Options) {
 		o.Port = port
 	}

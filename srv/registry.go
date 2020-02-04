@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"log"
+	"strconv"
 	"time"
 
 	"github.com/hashicorp/consul/api"
@@ -44,11 +45,16 @@ func registerServer(opts *Options) {
 
 	opts.id = fmt.Sprintf("%s-%s", opts.name, hex.EncodeToString(h[:]))
 
+	port, err := strconv.Atoi(opts.Port)
+	if err != nil {
+		log.Panic(err.Error())
+	}
+
 	if err := opts.Registry.Agent().ServiceRegister(&api.AgentServiceRegistration{
 		ID:      opts.id,
 		Name:    opts.name,
 		Address: opts.Host,
-		Port:    opts.Port,
+		Port:    port,
 		Tags:    []string{opts.name, opts.id},
 		Check: &api.AgentServiceCheck{
 			TTL:     (opts.RegistryTTL + time.Second).String(),

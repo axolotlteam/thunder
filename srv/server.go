@@ -14,7 +14,7 @@ var (
 	// DefaultHost -
 	DefaultHost = newHost()
 	// DefaultPort -
-	DefaultPort = 0
+	DefaultPort = "0"
 	// DefaultHook -
 	DefaultHook = func() {}
 )
@@ -24,13 +24,12 @@ func newRPCServer() *grpc.Server {
 }
 
 func newListener(opt *Options) net.Listener {
-	port := strconv.Itoa(opt.Port)
-	listener, err := net.Listen("tcp", opt.Host+":"+port)
+	listener, err := net.Listen("tcp", opt.Host+":"+opt.Port)
 	if err != nil {
 		log.Panic(err)
 	}
 
-	opt.Port = listener.Addr().(*net.TCPAddr).Port
+	opt.Port = strconv.Itoa(listener.Addr().(*net.TCPAddr).Port)
 
 	return listener
 }
