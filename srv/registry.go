@@ -78,12 +78,14 @@ func healthCheck(opts Options) {
 }
 
 // DeRegister a service with consul local agent
-func deRegister(c *api.Client, id string, beforeStop, afterStop func()) error {
-	beforeStop()
+func deRegister(o *Options) error {
+	o.BeforeStop()
 
-	err := c.Agent().ServiceDeregister(id)
+	err := o.Registry.Agent().ServiceDeregister(o.id)
+	o.Server.Stop()
+	o.Listener.Close()
 
-	afterStop()
+	o.AfterStop()
 
 	return err
 }

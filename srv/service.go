@@ -53,7 +53,7 @@ func (s *service) Run() error {
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM, syscall.SIGINT, syscall.SIGKILL)
 	go func(o *Options) {
 		<-c
-		deRegister(o.Registry, o.id, o.BeforeStop, o.AfterStop)
+		deRegister(o)
 		os.Exit(1)
 	}(&s.opts)
 
