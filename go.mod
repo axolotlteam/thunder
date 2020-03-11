@@ -12,6 +12,7 @@ require (
 	github.com/golang/protobuf v1.3.2 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/hashicorp/consul/api v1.2.0
+	github.com/json-iterator/go v1.1.9
 	github.com/konsorten/go-windows-terminal-sequences v1.0.2 // indirect
 	github.com/nsqio/go-nsq v1.0.7 // indirect
 	github.com/sirupsen/logrus v1.4.2
@@ -24,5 +25,4 @@ require (
 	golang.org/x/sys v0.0.0-20190920190810-ef0ce1748380 // indirect
 	google.golang.org/grpc v1.21.0
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
-	gopkg.in/mgo.v2 v2.0.0-20190816093944-a6b53ec6cb22
 )

@@ -2,9 +2,12 @@ package status
 
 import (
 	"github.com/axolotlteam/thunder/logger"
+	jsoniter "github.com/json-iterator/go"
 	"google.golang.org/grpc/codes"
 	gs "google.golang.org/grpc/status"
 )
+
+var json = jsoniter.ConfigCompatibleWithStandardLibrary
 
 // GRPCCode -
 type GRPCCode = codes.Code

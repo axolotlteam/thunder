@@ -1,7 +1,6 @@
 package status
 
 import (
-	"encoding/json"
 	"fmt"
 	"testing"
 
