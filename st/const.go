@@ -1,6 +1,11 @@
-package status
+package st
 
-import "google.golang.org/grpc/codes"
+import (
+	jsoniter "github.com/json-iterator/go"
+	"google.golang.org/grpc/codes"
+)
+
+var json = jsoniter.ConfigCompatibleWithStandardLibrary
 
 // -
 const (
@@ -22,13 +27,3 @@ const (
 	DataLoss           = codes.DataLoss
 	Unauthenticated    = codes.Unauthenticated
 )
-
-// Status -
-type Status interface {
-	Error() string
-	String() string
-	GetCode() int32
-	GetGRPCCode() GRPCCode
-	GetMsg() string
-	Err() error
-}

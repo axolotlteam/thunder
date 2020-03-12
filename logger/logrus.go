@@ -23,9 +23,19 @@ func Fatal(args ...interface{}) {
 	l.Fatal(args...)
 }
 
+// Fatalf - format logger with fatal
+func Fatalf(format string, args ...interface{}) {
+	l.Fatalf(format, args...)
+}
+
 // Warn -
 func Warn(args ...interface{}) {
 	l.Warn(args...)
+}
+
+// Warnf -
+func Warnf(format string, args ...interface{}) {
+	l.Warnf(format, args...)
 }
 
 // Info -
@@ -33,9 +43,19 @@ func Info(args ...interface{}) {
 	l.Info(args...)
 }
 
+// Infof -
+func Infof(format string, args ...interface{}) {
+	l.Infof(format, args...)
+}
+
 // Error -
 func Error(args ...interface{}) {
 	l.Error(args...)
+}
+
+// Errorf -
+func Errorf(format string, args ...interface{}) {
+	l.Errorf(format, args...)
 }
 
 // Debug -
@@ -43,14 +63,29 @@ func Debug(args ...interface{}) {
 	l.Debug(args...)
 }
 
+// Debugf -
+func Debugf(format string, args ...interface{}) {
+	l.Debugf(format, args...)
+}
+
 // Trace -
 func Trace(args ...interface{}) {
 	l.Trace(args...)
 }
 
+// Tracef -
+func Tracef(format string, args ...interface{}) {
+	l.Tracef(format, args...)
+}
+
 // Panic -
 func Panic(args ...interface{}) {
 	l.Panic(args...)
+}
+
+// Panicf -
+func Panicf(format string, args ...interface{}) {
+	l.Panicf(format, args...)
 }
 
 // WithFields -
