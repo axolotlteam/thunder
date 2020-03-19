@@ -5,6 +5,9 @@ import "github.com/sirupsen/logrus"
 // Fields -
 type Fields = logrus.Fields
 
+// Level -
+type Level = logrus.Level
+
 // log level
 const (
 	TraceLevel = logrus.TraceLevel
@@ -12,6 +15,8 @@ const (
 	InfoLevel  = logrus.InfoLevel
 	ErrorLevel = logrus.ErrorLevel
 	WarnLevel  = logrus.WarnLevel
+	FatalLevel = logrus.FatalLevel
+	PainLevel  = logrus.PanicLevel
 )
 
 // FieldHook - 用來增加Name 欄位
