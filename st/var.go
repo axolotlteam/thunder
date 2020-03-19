@@ -27,6 +27,7 @@ var (
 	ErrorInvalidProtocol = NewError(21002, "invalid protocol", Aborted)
 	ErrorHostNotFound    = NewError(21003, "host not found", Unavailable)
 	ErrorServiceNotFound = NewError(21004, "service not found", Unavailable)
+	ErrorTooManayCalls   = NewError(21005, "too many calls", Canceled)
 
 	// Database
 	ErrorDatabaseConnectFailed = NewError(21102, "database connect failed", Unavailable)
