@@ -8,7 +8,7 @@ import (
 
 // NewError -
 func NewError(code int32, msg string, gc codes.Code) error {
-	if _, ok := List[code]; ok {
+	if _, ok := list[code]; ok {
 		logger.Panicf("code : %d is duplicate", code)
 	}
 
@@ -29,9 +29,14 @@ func NewError(code int32, msg string, gc codes.Code) error {
 
 	err := s.Err()
 
-	List[code] = err
+	list[code] = err
 
 	return err
+}
+
+// List -
+func List() map[int32]error {
+	return list
 }
 
 // ConvertError -

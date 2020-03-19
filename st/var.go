@@ -7,7 +7,7 @@ package st
 // 22000	other error(by project)
 //
 var (
-	List = make(map[int32]error, 0)
+	list = make(map[int32]error, 0)
 )
 
 // Error List
@@ -20,13 +20,19 @@ var (
 	WarningInvalidParameter = NewError(11008, "invalid rrgument", InvalidArgument)
 
 	// error
-	ErrorConnectFailed         = NewError(21000, "connect failed", Unavailable)
-	ErrorConnectTimeOut        = NewError(21001, "connect time out", DeadlineExceeded)
-	ErrorDatabaseConnectFailed = NewError(21002, "database connect failed", Unavailable)
-	ErrorDatabaseCreateFailed  = NewError(21003, "database create failed", Aborted)
-	ErrorDataNotFound          = NewError(21004, "data not found", NotFound)
-	ErrorDatabaseUpdateFailed  = NewError(21005, "database update failed", Aborted)
-	ErrorDatabaseDeleteFailed  = NewError(21006, "database delete failed", Aborted)
-	ErrorDataIsExists          = NewError(21007, "data is exists", AlreadyExists)
-	ErrorInvalidParameter      = NewError(21008, "invalid argument", InvalidArgument)
+	ErrorConnectFailed   = NewError(21000, "connect failed", Unavailable)
+	ErrorConnectTimeOut  = NewError(21001, "connect time out", DeadlineExceeded)
+	ErrorInvalidProtocol = NewError(21002, "invalid protocol", Aborted)
+	// Daatabase
+	ErrorDatabaseConnectFailed = NewError(21102, "database connect failed", Unavailable)
+	ErrorDatabaseCreateFailed  = NewError(21103, "database create failed", Aborted)
+	ErrorDatabaseUpdateFailed  = NewError(21104, "database update failed", Aborted)
+	ErrorDatabaseDeleteFailed  = NewError(21105, "database delete failed", Aborted)
+	ErrorDataNotFound          = NewError(21106, "data not found", NotFound)
+	ErrorDataIsExists          = NewError(21107, "data is exists", AlreadyExists)
+
+	// auth
+	ErrorInvalidOAuthToken = NewError(21201, "invalid oauth access token", Unauthenticated)
+	ErrorInvalidParameter  = NewError(21202, "invalid argument", InvalidArgument)
+	ErrorPermissionsFailed = NewError(21203, "perrmission failed", PermissionDenied)
 )
