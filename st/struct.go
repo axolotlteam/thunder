@@ -52,3 +52,12 @@ func (e *err) GetMsg() string {
 func (e *err) GetGRPCCode() codes.Code {
 	return e.gst.Code()
 }
+
+func (e *err) Equal(er error) bool {
+	if x, ok := er.(*err); ok {
+		if x.GetCode() == e.GetCode() {
+			return true
+		}
+	}
+	return false
+}

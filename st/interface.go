@@ -10,4 +10,5 @@ type Errors interface {
 	GetGRPCCode() codes.Code
 	GetMsg() string
 	Err() error
+	Equal(err error) bool
 }

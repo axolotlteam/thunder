@@ -63,3 +63,8 @@ func ConvertError(errs error) Errors {
 
 	return temp
 }
+
+// Equal =
+func Equal(err, err2 error) bool {
+	return err.Error() == err2.Error()
+}
