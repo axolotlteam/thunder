@@ -36,13 +36,16 @@ var (
 	ErrorDatabaseDeleteFailed  = NewError(21105, "database delete failed", Aborted)
 	ErrorDataNotFound          = NewError(21106, "data not found", NotFound)
 	ErrorDataIsExists          = NewError(21107, "data is exists", AlreadyExists)
+	ErrorDecodeFailed          = NewError(21108, "decode failed", Aborted)
+	ErrorExecuteFailed         = NewError(21109, "execute failed", Aborted)
 
 	// Auth
-	ErrorInvalidOAuthToken = NewError(21201, "invalid oauth access token", Unauthenticated)
-	ErrorPermissionsFailed = NewError(21205, "permission failed", PermissionDenied)
-	ErrorUserDisabled      = NewError(21207, "user was disaabled", PermissionDenied)
-	ErrorUserFreeze        = NewError(21208, "user was freeze", PermissionDenied)
-	ErrorInvalidCheckCode  = NewError(21209, "invalid check code", PermissionDenied)
+	ErrorInvalidOAuthToken  = NewError(21201, "invalid oauth access token", Unauthenticated)
+	ErrorPermissionsFailed  = NewError(21205, "permission failed", PermissionDenied)
+	ErrorUserDisabled       = NewError(21207, "user was disaabled", PermissionDenied)
+	ErrorUserFreeze         = NewError(21208, "user was freeze", PermissionDenied)
+	ErrorInvalidCheckCode   = NewError(21209, "invalid check code", PermissionDenied)
+	ErrorGeneratorTokenFail = st.NewError(21210, "generator token fail", st.InvalidArgument)
 
 	// File
 	ErrorUploadFileTooLarge = NewError(21304, "upload file too large", Aborted)
@@ -62,4 +65,8 @@ var (
 	ErrorInvalidEmail       = NewError(21602, "invalid Email", InvalidArgument)
 	ErrorInvalidPhoneNumber = NewError(21603, "invalid phone number", InvalidArgument)
 	ErrorPhotoEditFailed    = NewError(21630, "photo edit failed", Aborted)
+
+	// Mail
+	ErrorAuthMailFailed = NewError(21701, "SendMailFailed", PermissionDenied)
+	ErrorSendMailFailed = NewError(21702, "SendMailFailed", Unavailable)
 )
