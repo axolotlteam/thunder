@@ -65,6 +65,7 @@ var (
 	ErrorInvalidEmail       = NewError(21602, "invalid Email", InvalidArgument)
 	ErrorInvalidPhoneNumber = NewError(21603, "invalid phone number", InvalidArgument)
 	ErrorPhotoEditFailed    = NewError(21630, "photo edit failed", Aborted)
+	ErrorDataParseFailed    = NewError(21631, "data parse failed", DataLoss)
 
 	// Mail
 	ErrorAuthMailFailed = NewError(21701, "SendMailFailed", PermissionDenied)
