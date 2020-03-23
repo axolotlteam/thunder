@@ -45,7 +45,7 @@ var (
 	ErrorUserDisabled       = NewError(21207, "user was disaabled", PermissionDenied)
 	ErrorUserFreeze         = NewError(21208, "user was freeze", PermissionDenied)
 	ErrorInvalidCheckCode   = NewError(21209, "invalid check code", PermissionDenied)
-	ErrorGeneratorTokenFail = st.NewError(21210, "generator token fail", st.InvalidArgument)
+	ErrorGeneratorTokenFail = NewError(21210, "generator token fail", InvalidArgument)
 
 	// File
 	ErrorUploadFileTooLarge = NewError(21304, "upload file too large", Aborted)
