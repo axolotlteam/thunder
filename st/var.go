@@ -17,7 +17,7 @@ var (
 	WarningLoginFail        = NewError(11000, "loging failed", NotFound)
 	WarningRegisterFail     = NewError(11001, "register failed", NotFound)
 	WarningRegisterExists   = NewError(11007, "register data was exists", NotFound)
-	WarningInvalidParameter = NewError(11008, "invalid rrgument", InvalidArgument)
+	WarningInvalidParameter = NewError(11008, "invalid argument", InvalidArgument)
 
 	// error list
 
@@ -46,6 +46,8 @@ var (
 	ErrorUserFreeze         = NewError(21208, "user was freeze", PermissionDenied)
 	ErrorInvalidCheckCode   = NewError(21209, "invalid check code", PermissionDenied)
 	ErrorGeneratorTokenFail = NewError(21210, "generator token fail", InvalidArgument)
+	ErrorSignInFailed       = NewError(21211, "Sign in failed", PermissionDenied)
+	ErrorSignOutFailed      = NewError(21212, "Sign out failed", PermissionDenied)
 
 	// File
 	ErrorUploadFileTooLarge = NewError(21304, "upload file too large", Aborted)
