@@ -41,6 +41,7 @@ var (
 
 	// Auth
 	ErrorInvalidOAuthToken  = NewError(21201, "invalid oauth access token", Unauthenticated)
+	ErrorTokenWasExpired    = NewError(21202, "token was expired", Unauthenticated)
 	ErrorPermissionsFailed  = NewError(21205, "permission failed", PermissionDenied)
 	ErrorUserDisabled       = NewError(21207, "user was disaabled", PermissionDenied)
 	ErrorUserFreeze         = NewError(21208, "user was freeze", PermissionDenied)
@@ -70,6 +71,6 @@ var (
 	ErrorDataParseFailed    = NewError(21631, "data parse failed", DataLoss)
 
 	// Mail
-	ErrorAuthMailFailed = NewError(21701, "SendMailFailed", PermissionDenied)
-	ErrorSendMailFailed = NewError(21702, "SendMailFailed", Unavailable)
+	ErrorAuthMailFailed = NewError(21701, "email code auth failed", PermissionDenied)
+	ErrorSendMailFailed = NewError(21702, "email send failed", Unavailable)
 )
