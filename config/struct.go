@@ -8,6 +8,9 @@ type Database struct {
 	Database   string `json:"database" yaml:"database"`
 	Collection string `json:"collection" yaml:"collection"`
 	SSL        bool   `json:"ssl" yaml:"ssl"`
+	AppName    string `json:"appname" yaml:"appname"`
+	PoolSize   uint64 `json:"poolsize" yaml:"poolsize"`
+	ReplicaSet string `json:"replicaset" yaml:"replicaset"`
 }
 
 // Logger -
