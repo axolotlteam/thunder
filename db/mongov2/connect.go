@@ -2,8 +2,10 @@ package mongov2
 
 import (
 	"context"
+	"crypto/tls"
 	"time"
 
+	"github.com/axolotlteam/thunder/config"
 	"github.com/davecgh/go-spew/spew"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -27,7 +29,7 @@ func Close() {
 }
 
 // Con -
-func Con(c Config) error {
+func Con(c config.Database) error {
 	if err := con(c); err != nil {
 		return err
 	}
@@ -39,12 +41,13 @@ func Con(c Config) error {
 	return nil
 }
 
-func con(c Config) error {
+func con(c config.Database) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	opts := options.Client()
-	opts.ApplyURI(uri(c)).SetAppName(c.AppName).SetMaxPoolSize(c.PoolSize)
+
+	opts.ApplyURI(uri(c)).SetAppName(c.AppName)
 
 	if c.User != "" && c.Password != "" {
 		opts.SetAuth(options.Credential{
@@ -53,6 +56,21 @@ func con(c Config) error {
 			AuthSource: c.Database,
 		})
 	}
+
+	if c.SSL {
+		opts.SetTLSConfig(&tls.Config{
+			InsecureSkipVerify: true,
+		})
+	}
+
+	if c.PoolSize > 0 {
+		opts.SetMaxPoolSize(c.PoolSize)
+	} else {
+		opts.SetMaxPoolSize(10)
+	}
+
+	opts.SetMinPoolSize(5)
+	opts.SetMaxConnIdleTime(time.Second * 300)
 
 	// Connect to MongoDB
 	client, err := mongo.NewClient(opts)
@@ -74,7 +92,7 @@ func con(c Config) error {
 }
 
 // mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[database][?options]]
-func uri(c Config) string {
+func uri(c config.Database) string {
 	s := "mongodb://"
 
 	if c.User != "" && c.Password != "" {
