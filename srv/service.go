@@ -1,10 +1,12 @@
 package srv
 
 import (
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 
+	"github.com/gin-gonic/gin"
 	"google.golang.org/grpc"
 )
 
@@ -15,7 +17,6 @@ type service struct {
 // newService -
 func newService(opts ...Option) Service {
 	options := newOptions(opts...)
-
 	return &service{
 		opts: options,
 	}
@@ -44,8 +45,18 @@ func (s *service) Options() Options {
 	return s.opts
 }
 
-func (s *service) Server() *grpc.Server {
+func (s *service) Server() http.Handler {
 	return s.opts.Server
+}
+
+func (s *service) ServerType() string {
+	switch ServerType {
+	case GIN:
+		return "HTTP"
+	case GRPC:
+		return "GRPC"
+	}
+	return ""
 }
 
 func (s *service) Run() error {
@@ -66,8 +77,13 @@ func (s *service) Start() error {
 
 	c := make(chan error, 1)
 	go func(o *Options) {
-		if err := s.opts.Server.Serve(s.opts.Listener); err != nil {
-			c <- err
+		switch ServerType {
+		case GIN:
+			s.opts.Server.(*gin.Engine).RunListener(s.opts.Listener)
+		case GRPC:
+			if err := s.opts.Server.(*grpc.Server).Serve(s.opts.Listener); err != nil {
+				c <- err
+			}
 		}
 	}(&s.opts)
 

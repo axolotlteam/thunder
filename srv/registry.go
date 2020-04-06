@@ -5,10 +5,12 @@ import (
 	"encoding/hex"
 	"fmt"
 	"log"
+	"net/http"
 	"strconv"
 	"time"
 
 	"github.com/hashicorp/consul/api"
+	"google.golang.org/grpc"
 )
 
 var (
@@ -82,7 +84,15 @@ func deRegister(o *Options) error {
 	o.BeforeStop()
 
 	err := o.Registry.Agent().ServiceDeregister(o.id)
-	o.Server.Stop()
+
+	switch ServerType {
+	case GIN:
+		server := &http.Server{Handler: o.Server}
+		server.Close()
+	case GRPC:
+		o.Server.(*grpc.Server).Stop()
+	}
+
 	o.Listener.Close()
 
 	o.AfterStop()

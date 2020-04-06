@@ -3,10 +3,20 @@ package srv
 import (
 	"log"
 	"net"
+	"net/http"
 	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/consul/api"
-	"google.golang.org/grpc"
+)
+
+// ServerType -
+var ServerType int
+
+// server type list
+const (
+	GRPC = iota
+	GIN
 )
 
 // Options -
@@ -14,7 +24,7 @@ type Options struct {
 	id       string
 	name     string
 	version  string
-	Server   *grpc.Server
+	Server   http.Handler
 	Host     string
 	Port     string
 	Listener net.Listener
@@ -84,8 +94,14 @@ func SetRegistryTTL(t time.Duration) Option {
 }
 
 // SetServer -
-func SetServer(s *grpc.Server) Option {
+func SetServer(s http.Handler) Option {
 	return func(o *Options) {
+		switch s.(type) {
+		case *gin.Engine:
+			ServerType = GIN
+		default:
+			ServerType = GRPC
+		}
 		o.Server = s
 	}
 }

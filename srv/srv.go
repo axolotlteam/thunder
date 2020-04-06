@@ -1,8 +1,6 @@
 package srv
 
-import (
-	"google.golang.org/grpc"
-)
+import "net/http"
 
 // Service -
 type Service interface {
@@ -19,7 +17,9 @@ type Service interface {
 	// Options returns the current options
 	Options() Options
 	// The server
-	Server() *grpc.Server
+	Server() http.Handler
+	// The server type
+	ServerType() string
 }
 
 // Option -
