@@ -9,6 +9,7 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/elazarl/goproxy v0.0.0-20200315184450-1f3cb6622dad // indirect
 	github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8
+	github.com/go-redis/redis/v7 v7.2.0
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/golang/protobuf v1.3.2 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
