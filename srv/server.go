@@ -35,7 +35,7 @@ func newListener(opt *Options) net.Listener {
 }
 
 func newHost() string {
-	return localIP()
+	return "127.0.0.1"
 }
 
 func localIP() string {
