@@ -18,3 +18,10 @@ type Logger struct {
 	Level   string `json:"level" yaml:"level"`
 	Webhook string `json:"webhook" yaml:"webhook"`
 }
+
+// Nats -
+type Nats struct {
+	Host     string `json:"host" yaml:"host"`
+	User     string `json:"user" yaml:"user"`
+	Password string `json:"password" yaml:"password"`
+}
