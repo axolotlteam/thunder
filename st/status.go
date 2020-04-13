@@ -56,7 +56,11 @@ func ConvertError(errs error) Errors {
 	}
 
 	if ok {
-		temp.parseMsg()
+		// 如果不能解析則給他錯誤代碼
+		if err := temp.parseMsg(); err != nil {
+			temp.st.Code = 99999
+			temp.st.Msg = gt.Message()
+		}
 	} else {
 		logger.Panicf("convert error failed with errr : %s", errs.Error())
 	}
