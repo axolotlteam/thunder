@@ -1,7 +1,6 @@
 package st
 
 import (
-	"github.com/axolotlteam/thunder/logger"
 	"google.golang.org/grpc/codes"
 	gs "google.golang.org/grpc/status"
 )
@@ -18,15 +17,13 @@ type body struct {
 	Msg  string `json:"msg" yaml:"msg"`
 }
 
-func (e *err) parseMsg() {
+func (e *err) parseMsg() error {
 
 	e.st = &body{}
 
 	err := json.Unmarshal([]byte(e.gst.Message()), e.st)
 
-	if err != nil {
-		logger.WithError(err).Panic("grpc status unmarshal error")
-	}
+	return err
 }
 
 // String -
