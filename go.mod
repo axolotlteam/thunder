@@ -14,6 +14,7 @@ require (
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/hashicorp/consul/api v1.2.0
 	github.com/json-iterator/go v1.1.9
+	github.com/nats-io/nats-server/v2 v2.1.6 // indirect
 	github.com/nats-io/nats.go v1.9.2
 	github.com/nsqio/go-nsq v1.0.7 // indirect
 	github.com/parnurzeal/gorequest v0.2.16

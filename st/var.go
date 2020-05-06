@@ -51,6 +51,7 @@ var (
 	ErrorSignOutFailed      = NewError(21212, "Sign out failed", PermissionDenied)
 
 	// File
+	ErrorFileNotFound       = NewError(21303, "file not found", DataLoss)
 	ErrorUploadFileTooLarge = NewError(21304, "upload file too large", Aborted)
 	ErrorUploadFileNotFound = NewError(21305, "upload file not found", Aborted)
 	ErrorOpenFileFailed     = NewError(21310, "open file failed", Aborted)
@@ -69,6 +70,7 @@ var (
 	ErrorInvalidPhoneNumber = NewError(21603, "invalid phone number", InvalidArgument)
 	ErrorPhotoEditFailed    = NewError(21630, "photo edit failed", Aborted)
 	ErrorDataParseFailed    = NewError(21631, "data parse failed", DataLoss)
+	ErrorDuplicateData      = NewError(21632, "duplicate data", InvalidArgument)
 
 	// Mail
 	ErrorAuthMailFailed = NewError(21701, "email code auth failed", PermissionDenied)
