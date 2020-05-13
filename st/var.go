@@ -56,11 +56,12 @@ var (
 	ErrorUploadFileNotFound = NewError(21305, "upload file not found", Aborted)
 	ErrorOpenFileFailed     = NewError(21310, "open file failed", Aborted)
 	ErrorUploadPhotoFailed  = NewError(21311, "upload photo failed", Aborted)
+	ErrorDownloadFileFailed = NewError(21312, "download file failed", Aborted)
 
 	// Parameters
 	ErrorInvalidParameter      = NewError(21402, "invalid argument", InvalidArgument)           // 錯誤的參數
 	ErrorMissRequiredParameter = NewError(21403, "missing required parameter", InvalidArgument) // 缺少必填參數
-	ErrroOverParameter         = NewError(21404, "over max parameter", InvalidArgument)         // 超過最大可輸入參數
+	ErrorOverParameter         = NewError(21404, "over max parameter", InvalidArgument)         // 超過最大可輸入參數
 	ErrorParameterOutOfRange   = NewError(21405, "parameter out of range", OutOfRange)          // 參數超過範圍
 	ErrorParameterNotAllowed   = NewError(21406, "parameter not allowed", InvalidArgument)      // 參數不被允許
 
