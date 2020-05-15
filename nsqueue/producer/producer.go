@@ -3,7 +3,7 @@ package producer
 import (
 	"time"
 
-	"github.com/bitly/go-nsq"
+	"github.com/nsqio/go-nsq"
 )
 
 // ConnTCP -

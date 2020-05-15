@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/axolotlteam/thunder/nsqueue/producer"
-	"github.com/bitly/go-nsq"
+	"github.com/nsqio/go-nsq"
 	"github.com/stretchr/testify/assert"
 )
 

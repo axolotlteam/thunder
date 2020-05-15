@@ -4,6 +4,7 @@ import (
 	"context"
 	"testing"
 
+	"github.com/axolotlteam/thunder/config"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/bson"
@@ -12,7 +13,7 @@ import (
 // Test_Con -
 func Test_Con(t *testing.T) {
 
-	config := Config{
+	config := config.Database{
 		Host:     "localhost:27017",
 		User:     "root",
 		Password: "9527",

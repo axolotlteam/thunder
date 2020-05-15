@@ -8,7 +8,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/bitly/go-nsq"
+	"github.com/nsqio/go-nsq"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
