@@ -1,4 +1,4 @@
-module github.comm/axolotlteam/thunder
+module github.com/axolotlteam/thunder
 
 go 1.14
 
