@@ -11,7 +11,6 @@ import (
 
 // ConsulKV -
 func ConsulKV(host, key string, ftype string) (*viper.Viper, error) {
-	v := viper.New()
 
 	c := &api.Config{
 		Address: host,
@@ -24,6 +23,13 @@ func ConsulKV(host, key string, ftype string) (*viper.Viper, error) {
 		return nil, st.ErrorConnectFailed
 	}
 
+	return ConsulByClient(client, key, ftype)
+
+}
+
+// ConsulByClient -
+func ConsulByClient(client *api.Client, key string, ftype string) (*viper.Viper, error) {
+	v := viper.New()
 	kv := client.KV()
 
 	pair, _, err := kv.Get(key, nil)
@@ -47,4 +53,5 @@ func ConsulKV(host, key string, ftype string) (*viper.Viper, error) {
 	}
 
 	return v, nil
+
 }
