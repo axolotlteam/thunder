@@ -54,7 +54,7 @@ var (
 	ErrorFileNotFound       = NewError(21303, "file not found", DataLoss)
 	ErrorUploadFileTooLarge = NewError(21304, "upload file too large", Aborted)
 	ErrorUploadFileNotFound = NewError(21305, "upload file not found", Aborted)
-	ErrorUploadFileFailed   = NewError(21305, "upload file failed", Aborted)
+	ErrorUploadFileFailed   = NewError(21306, "upload file failed", Aborted)
 	ErrorOpenFileFailed     = NewError(21310, "open file failed", Aborted)
 	ErrorUploadPhotoFailed  = NewError(21311, "upload photo failed", Aborted)
 	ErrorDownloadFileFailed = NewError(21312, "download file failed", Aborted)
