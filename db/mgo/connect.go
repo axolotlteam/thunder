@@ -75,6 +75,7 @@ func con(c config.Database) error {
 
 	opts.SetMinPoolSize(5)
 	opts.SetMaxConnIdleTime(time.Second * 300)
+	opts.SetHeartbeatInterval(10 * time.Second)
 
 	// Connect to MongoDB
 	client, err := mongo.NewClient(opts)
