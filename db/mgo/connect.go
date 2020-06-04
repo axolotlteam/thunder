@@ -1,8 +1,9 @@
-package mongov2
+package mgo
 
 import (
 	"context"
 	"crypto/tls"
+	"strings"
 	"time"
 
 	"github.com/axolotlteam/thunder/config"
@@ -56,6 +57,9 @@ func con(c config.Database) error {
 			AuthSource: c.Database,
 		})
 	}
+	if c.ReplicaSet != "" {
+		opts.ReplicaSet = &c.ReplicaSet
+	}
 
 	if c.SSL {
 		opts.SetTLSConfig(&tls.Config{
@@ -93,13 +97,19 @@ func con(c config.Database) error {
 
 // mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[database][?options]]
 func uri(c config.Database) string {
+	// Host = "mongo1:27017,mongo2:27017"
+	host := strings.Split(c.Host, ",")
 	s := "mongodb://"
 
-	if c.User != "" && c.Password != "" {
-		s += c.User + ":" + c.Password + "@"
+	for i, v := range host {
+		if c.User != "" && c.Password != "" {
+			s += c.User + ":" + c.Password + "@"
+		}
+		s += v
+		if i != len(host)-1 {
+			s += ","
+		}
 	}
-
-	s += c.Host
 
 	return s
 }

@@ -1,4 +1,4 @@
-package mongov2
+package mgo
 
 import (
 	"context"
@@ -14,11 +14,12 @@ import (
 func Test_Con(t *testing.T) {
 
 	config := config.Database{
-		Host:     "localhost:27017",
-		User:     "root",
-		Password: "9527",
-		Database: "admin",
-		AppName:  "test",
+		Host: "localhost:27017,localhost:27018,localhost:27019",
+		//User:     "root",
+		//Password: "9527",
+		Database:   "admin",
+		AppName:    "test",
+		ReplicaSet: "rs0",
 	}
 
 	err := Con(config)
