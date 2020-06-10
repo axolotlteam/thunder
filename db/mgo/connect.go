@@ -3,11 +3,11 @@ package mgo
 import (
 	"context"
 	"crypto/tls"
+	"errors"
 	"strings"
 	"time"
 
 	"github.com/axolotlteam/thunder/config"
-	"github.com/davecgh/go-spew/spew"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
@@ -17,6 +17,10 @@ var m *mongo.Client
 
 // M -
 func M() (*mongo.Client, error) {
+	if m == nil {
+		return nil, errors.New("no connection")
+	}
+
 	if err := m.Ping(context.TODO(), readpref.Primary()); err != nil {
 		return nil, err
 	}
@@ -36,7 +40,7 @@ func Con(c config.Database) error {
 	}
 
 	if err := m.Ping(context.TODO(), readpref.Primary()); err != nil {
-		spew.Dump(err.Error())
+		return err
 	}
 
 	return nil
