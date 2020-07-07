@@ -24,4 +24,11 @@ type Nats struct {
 	Host     string `json:"host" yaml:"host"`
 	User     string `json:"user" yaml:"user"`
 	Password string `json:"password" yaml:"password"`
+	Name     string `json:"name" yaml:"name"`
 }
+
+type Consul struct {
+	Host string `json:"host" yaml:"host"`
+	Acl  string `json:"acl" yaml:"acl"`
+}
+

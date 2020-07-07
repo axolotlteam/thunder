@@ -53,5 +53,4 @@ func ConsulByClient(client *api.Client, key string, ftype string) (*viper.Viper,
 	}
 
 	return v, nil
-
 }
