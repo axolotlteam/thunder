@@ -33,8 +33,8 @@ func ConsulByClient(client *api.Client, key string, ftype string) (*viper.Viper,
 	kv := client.KV()
 
 	pair, _, err := kv.Get(key, nil)
-	if err != nil {
-		logger.WithError(err).Panicf("not found the key [ %s ]exists", key)
+	if err != nil || pair == nil {
+		logger.WithError(err).Errorf("not found the key [%s]", key)
 		return nil, st.ErrorDataNotFound
 	}
 
@@ -43,6 +43,8 @@ func ConsulByClient(client *api.Client, key string, ftype string) (*viper.Viper,
 		v.SetConfigType("yaml")
 	case "json":
 		v.SetConfigType("json")
+	default:
+		return nil, st.ErrorInvalidParameter
 	}
 
 	err = v.ReadConfig(bytes.NewReader(pair.Value))
