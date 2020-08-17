@@ -80,4 +80,7 @@ var (
 	// Mail
 	ErrorAuthMailFailed = NewError(21701, "email code auth failed", PermissionDenied)
 	ErrorSendMailFailed = NewError(21702, "email send failed", Unavailable)
+
+	// Facebook API
+	ErrorCustomerOutOfDate = NewError(22980, "facebook customer out of date for message", OutOfRange)
 )
