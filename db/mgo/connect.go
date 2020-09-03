@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/tls"
 	"errors"
+	"fmt"
 	"strings"
 	"time"
 
@@ -51,8 +52,9 @@ func con(c config.Database) error {
 	defer cancel()
 
 	opts := options.Client()
+	opts.SetAppName(c.AppName)
 
-	opts.ApplyURI(uri(c)).SetAppName(c.AppName)
+	opts.SetHosts(strings.Split(c.Host, ","))
 
 	if c.User != "" && c.Password != "" {
 		opts.SetAuth(options.Credential{
@@ -115,6 +117,7 @@ func uri(c config.Database) string {
 			s += ","
 		}
 	}
+	fmt.Println(s)
 
 	return s
 }

@@ -14,9 +14,9 @@ import (
 func Test_Con(t *testing.T) {
 
 	config := config.Database{
-		Host: "localhost:27017,localhost:27018,localhost:27019",
-		//User:     "root",
-		//Password: "9527",
+		Host:       "mongo-mongodb-0.mongo-mongodb-headless.default.svc.cluster.local:27017,mongo-mongodb-1.mongo-mongodb-headless.default.svc.cluster.local:27017",
+		User:       "root",
+		Password:   "csofans-9527",
 		Database:   "admin",
 		AppName:    "test",
 		ReplicaSet: "rs0",
