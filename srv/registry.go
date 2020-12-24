@@ -57,10 +57,11 @@ func registerServer(opts *Options) {
 		Name:    opts.name,
 		Address: opts.Host,
 		Port:    port,
-		Tags:    []string{opts.name, opts.id},
+		Tags:    NewTags(opts),
 		Check: &api.AgentServiceCheck{
-			TTL:     (opts.RegistryTTL + time.Second).String(),
-			Timeout: time.Minute.String(),
+			TTL:                            (opts.RegistryTTL + time.Second).String(),
+			Timeout:                        time.Minute.String(),
+			DeregisterCriticalServiceAfter: time.Minute.String(),
 		},
 	}); err != nil {
 		log.Panic(err.Error())
