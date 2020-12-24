@@ -19,7 +19,6 @@ func NewTags(opts *Options) []string {
 	tags = append(tags, httpMiddlewareTags()...)
 	tags = append(tags, opts.name, opts.id)
 
-	fmt.Println("tag", tags)
 	return tags
 }
 
